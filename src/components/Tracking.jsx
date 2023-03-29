@@ -1,8 +1,57 @@
+// import React, { useEffect, useState } from 'react';
+// import { useParams } from 'react-router-dom';
+
+// const Tracking = (props) => {
+//   const [dataGroup, setDataGroup] = useState([]);
+//   const { id } = useParams();
+
+//   const getData = async () => {
+//     try {
+//       const res = await fetch(`http://formfriend.cleverapps.io/api/form/EditForm/${id}`, {
+//         mode: 'cors',
+//         headers: {
+//           'Access-Control-Allow-Origin': '*',
+//           'Content-Type': 'application/json',
+//           Authorization: 'Bearer ' + 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ',
+//         },
+//       });
+//       const actualdata = await res.json();
+//       console.log(actualdata.group);
+//       setDataGroup(actualdata.group);
+//     } catch (err) {
+//       console.log('err');
+//     }
+//   };
+
+//   useEffect(() => {
+//     getData();
+//   }, []);
+
+//   return (
+//     <>
+//       <div>Tracking {id}</div>
+//       {dataGroup.map((value, index) => {
+//         return (
+//           <React.Fragment key={index}>
+//             <h1>
+//               {index + 1}. {value.groupName}
+//             </h1>
+//             <table className="table table-light table-hover" style={{ marginRight: '10px' }}>
+//               <thead>
+//                 <tr>
+//                   <th scope="col">#</th>
+//                   <th scope="col">Email</th>
+//                   <th scope="col">Seen</th>
+//                   <th scope="col">Filled</th>
+//                 </tr>
+//               </thead>
+//               <tbody>
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const Tracking = (props) => {
   const [dataGroup, setDataGroup] = useState([]);
+  const [filteredData, setFilteredData] = useState({});
   const { id } = useParams();
 
   const getData = async () => {
@@ -23,13 +72,51 @@ const Tracking = (props) => {
     }
   };
 
+ 
+  const handleFilterData = async () => {
+    const filtered = {};
+    dataGroup.forEach((group, groupIndex) => {
+      filtered[groupIndex] = [];
+      group.participants.forEach((participant) => {
+        if ((participant.seen === true && participant.filled === false) || (participant.seen === false && participant.filled === false)) {
+          filtered[groupIndex].push(participant.email);
+        }
+      });
+    });
+    setFilteredData(filtered);
+    console.log(filteredData);
+  
+    try {
+      const res = await fetch(`http://formfriend.cleverapps.io/api//form/AddReminder`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ',
+        },
+        body: JSON.stringify(filtered),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  
+
   useEffect(() => {
     getData();
   }, []);
 
   return (
     <>
-      <div>Tracking {id}</div>
+      <div>
+        Tracking {id}
+      </div>
+      <button className="btn btn-primary me-md-2" type="button">Add Group</button>
+     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button className="btn btn-primary me-md-2" type="button" onClick={handleFilterData()}>Reminder</button>
+      </div>
       {dataGroup.map((value, index) => {
         return (
           <React.Fragment key={index}>
@@ -46,6 +133,7 @@ const Tracking = (props) => {
                 </tr>
               </thead>
               <tbody>
+
                 {value.participants.map((data, index) => {
                   return (
                     <tr key={index}>
@@ -67,6 +155,20 @@ const Tracking = (props) => {
 
 export default Tracking;
 
+ // const handleFilterData = () => {
+  //   const filtered = {};
+  //   dataGroup.forEach((group, groupIndex) => {
+  //     filtered[groupIndex] = [];
+  //     group.participants.forEach((participant) => {
+  //       if ((participant.seen === true && participant.filled === false) || (participant.seen === false && participant.filled === false)) {
+  //         filtered[groupIndex].push(participant.email);
+  //       }
+  //     });
+  //   });
+  //   setFilteredData(filtered);
+  //   console.log(filteredData);
+  // };
+  
 
 
 // import React,{useEffect,useState} from 'react'

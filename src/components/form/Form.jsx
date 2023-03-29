@@ -1,8 +1,30 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
 export const Forms = () => {
   const [fields, setFields] = useState([]);
+  const [dataGroup, setDataGroup] = useState([]);
+  const [filteredData, setFilteredData] = useState({});
+  const { id } = useParams();
+
+  const getData = async () => {
+    try {
+      const res = await fetch(`http://formfriend.cleverapps.io/api/form/EditForm/${id}`, {
+        mode: 'cors',
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ',
+        },
+      });
+      const actualdata = await res.json();
+      console.log(actualdata);
+      // setDataGroup(actualdata.group);
+    } catch (err) {
+      console.log('err');
+    }
+  };
 
   const handleAddField = () => {
     setFields([...fields, { name: "", type: "text" }]);
@@ -28,6 +50,9 @@ export const Forms = () => {
 
   return (
     <div className="container mt-5">
+    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button className="btn btn-primary me-md-2" type="button">Traking</button>
+      </div>
       <Form>
         {fields.map((field, index) => (
           <>

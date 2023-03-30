@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppLayout from "./components/layout/AppLayout";
 import Blank from "./pages/Blank";
 import Dashboard from "./pages/Dashboard";
-import Form from "./components/form/Form";
+import Forms from "./components/form/Form";
 import Group from "./pages/Group";
 import AddGroup from "./components/AddGroup";
 import DetailsOfForm from "./components/DetailsOfForm";
@@ -20,10 +20,13 @@ function App() {
           <Route path="reminders" element={<Blank />} />
           <Route path="setting" element={<Blank />} />
           <Route path="user" element={<Blank />} />
-          <Route path="form" element={<Form />} />
+          <Route path="form" element={<Forms />} />
           <Route path="group/addGroup" element={<AddGroup />} />
-          <Route path="DetailsOfForm/:id" element={<DetailsOfForm />} />
-          <Route path="DetailsOfForm/:id/Tracking" element={<Tracking />} />
+          <Route path="DetailsOfForm/:propValue" element={<DetailsOfForm />} />
+          <Route
+            path="DetailsOfForm/:propValue/Tracking"
+            element={<Tracking />}
+          />
         </Route>
       </Routes>
     </BrowserRouter>

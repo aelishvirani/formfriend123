@@ -17,8 +17,6 @@ const [data,setData] = useState([]);
       }
             );
             const actualdata = await res.json();
-            
-            console.log(actualdata);
             setData(actualdata);
         }
         catch (err) {
@@ -86,12 +84,12 @@ const [data,setData] = useState([]);
 
 <div className="row">
 {data.map((value,index)=>{
-
+  const propValue = value.id;
   return(
     <>
     <div className="col-md-4 mt-3 mb-3 mb-sm-0" key={value.id}>
     <div className="card">
-    <Link to={`/DetailsOfForm/${value.id}`}>
+    <Link to={`/DetailsOfForm/${propValue}`}>
       <div className="card-body">
         <h5 className="card-title">{value.formName}</h5>
         {/* <p className="card-text">With supporting text below as a natural lead-in to additional content.</p> */}

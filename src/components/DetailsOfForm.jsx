@@ -128,6 +128,10 @@ const DetailsOfForm=()=> {
 
   return (
     <>
+    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+    <Link to={`/DetailsOfForm/${propValue}/Tracking`}> <button className="btn btn-primary me-md-2" type="button">Tracking</button></Link>
+      <button className="btn btn-primary" type="button">Button</button>
+    </div>
       <div className="container mt-5">
         {/* <Link to={`/DetailsOfForm/${id}/Tracking`}><div className="d-grid gap-2 d-md-flex justify-content-md-end">
           <button className="btn btn-primary me-md-2" type="button">

@@ -5,11 +5,11 @@ import { useParams } from 'react-router-dom';
 const Tracking = (props) => {
   const [dataGroup, setDataGroup] = useState([]);
   const [filteredData, setFilteredData] = useState({});
-  const { id } = useParams();
+  const { propValue } = useParams();
 
   const getData = async () => {
     try {
-      const res = await fetch(`http://formfriend.cleverapps.io/api/form/EditForm/${id}`, {
+      const res = await fetch(`http://formfriend.cleverapps.io/api/form/EditForm/${propValue}`, {
         mode: 'cors',
         headers: {
           'Access-Control-Allow-Origin': '*',
@@ -37,11 +37,11 @@ const Tracking = (props) => {
       });
       
       const reminder={
-        "GroupId":`${group.groupId}`,
+        "GrouppropValue":`${group.grouppropValue}`,
         "Message":"Test",
         "Participants":filtered[groupIndex],
       }
-      console.log(group.groupId);
+      console.log(group.grouppropValue);
       console.log(reminder);
     try {
       const res = await fetch(`http://formfriend.cleverapps.io/api/form/AddReminder`, {
@@ -73,10 +73,10 @@ const Tracking = (props) => {
   return (
     <>
       <div>
-        Tracking {id}
+        Tracking {propValue}
       </div>
       <button className="btn btn-primary me-md-2" type="button">Add Group</button>
-     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+     <div className="d-grpropValue gap-2 d-md-flex justify-content-md-end">
         <button className="btn btn-primary me-md-2" type="button" onClick={handleFilterData}>Reminder</button>
       </div>
       {dataGroup.map((value, index) => {
@@ -100,7 +100,7 @@ const Tracking = (props) => {
                   return (
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
-                      <td style={{maxWidth:'125px',minWidth:'125px'}}>{data.email}</td>
+                      <td style={{maxWpropValueth:'125px',minWpropValueth:'125px'}}>{data.email}</td>
                       <td>{data.seen ? 'Yes' : 'No'}</td>
                       <td>{data.filled ? 'Yes' : 'No'}</td>
                     </tr>
@@ -147,7 +147,7 @@ export default Tracking;
   //         Authorization: 'Bearer ' + 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ'
   //       },
   //       body: JSON.stringify({
-  //         groupIds: [id],
+  //         grouppropValues: [propValue],
   //         seenYesFilledNo: emails.seenYesFilledNo,
   //         seenNoFilledNo: emails.seenNoFilledNo
   //       })
@@ -182,11 +182,11 @@ export default Tracking;
 // const Tracking=(props)=> {
 //     const[dataGroup,setDataGroup] = useState([]);
 //     const[participants,setPartcipants]=useParams([]);
-//     const {id} =useParams(); 
+//     const {propValue} =useParams(); 
 
 //     const getData = async () => {
 //         try {
-//             const res = await fetch(`http://formfriend.cleverapps.io/api/form/EditForm/${id}`,
+//             const res = await fetch(`http://formfriend.cleverapps.io/api/form/EditForm/${propValue}`,
 //               {
 //         mode: "cors",
 //         headers: {
@@ -214,7 +214,7 @@ export default Tracking;
 //   return (
 //     <>
 
-//     <div>Tracking{id}</div>
+//     <div>Tracking{propValue}</div>
 //     {dataGroup.map((value,index)=>{
       
 //         return(

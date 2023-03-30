@@ -17,6 +17,7 @@ const [data,setData] = useState([]);
       }
             );
             const actualdata = await res.json();
+            console.log(data);
             setData(actualdata);
         }
         catch (err) {

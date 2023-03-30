@@ -9,7 +9,9 @@ import Group from "./pages/Group";
 import AddGroup from "./components/AddGroup";
 import DetailsOfForm from "./components/DetailsOfForm";
 import Tracking from "./components/Tracking";
+import GroupView from "./components/GroupView";
 import React from "react";
+import Responces from "./components/Responces";
 function App() {
   return (
     <BrowserRouter>
@@ -23,6 +25,8 @@ function App() {
           <Route path="form" element={<Forms />} />
           <Route path="group/addGroup" element={<AddGroup />} />
           <Route path="DetailsOfForm/:propValue" element={<DetailsOfForm />} />
+          <Route path="DetailsOfForm/:propValue/Tracking/Responces" element={<Responces />} />
+          <Route path=":propValue/GroupView" element={<GroupView />} />
           <Route
             path="DetailsOfForm/:propValue/Tracking"
             element={<Tracking />}

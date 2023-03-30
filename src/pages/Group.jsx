@@ -22,7 +22,9 @@ function Group() {
           const actualdata = await res.json();
           
           console.log(actualdata);
+          console.log(actualdata.groupName);
           setGroupData(actualdata);
+
       }
       catch (err) {
           console.log("err");
@@ -56,6 +58,11 @@ function Group() {
   </thead>
   <tbody>
   {dataGroup.map((group,index)=>{
+    console.log(group.groupParticipant);
+    const mem = group.groupParticipant;
+    const total=mem.length;
+    const propValue =group.groupId
+          
     return(
       <>
       
@@ -65,7 +72,10 @@ function Group() {
       <td>{total}</td>
       <td>{group.groupLink}</td>
       <td>{group.date}</td>
-      <td>view</td>
+     <Link to={`/${propValue}/GroupView`}>
+      {/* <td>{group.groupId}</td> */}
+       <td style={{color:"blue"}}>View</td> 
+      </Link>
       {/* <Link><td>view</td></Link> */}
     </tr></>)
 

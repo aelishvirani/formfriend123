@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const Tracking = (props) => {
   const [dataGroup, setDataGroup] = useState([]);
@@ -78,6 +78,7 @@ const Tracking = (props) => {
       <button className="btn btn-primary me-md-2" type="button">Add Group</button>
      <div className="d-grpropValue gap-2 d-md-flex justify-content-md-end">
         <button className="btn btn-primary me-md-2" type="button" onClick={handleFilterData}>Reminder</button>
+        <Link to ={`/DetailsOfForm/${propValue}/Tracking/Responces`}><button className="btn btn-primary me-md-2" type="button">Responses</button></Link>
       </div>
       {dataGroup.map((value, index) => {
         return (

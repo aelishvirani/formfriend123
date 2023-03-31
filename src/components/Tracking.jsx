@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import { Link, useParams } from 'react-router-dom';
-=======
 import { useParams } from 'react-router-dom';
 import { Modal, Button, Form, Toast } from 'react-bootstrap';
 import { ReactComponent as MyImage } from '../svgs/group_add_FILL0_wght400_GRAD0_opsz48.svg';
 import { ReactComponent as Notification } from '../svgs/add_alert_FILL0_wght400_GRAD0_opsz48.svg';
 import { ReactComponent as Delete } from '../svgs/delete_FILL0_wght400_GRAD0_opsz48.svg';
 
->>>>>>> 23d13935d8c7977e4f9b4b7a04323cf1c86b9297
 
 const Tracking = (props) => {
   const [dataGroup, setDataGroup] = useState([]);
@@ -170,11 +166,6 @@ const Tracking = (props) => {
       <button className="btn btn-primary me-md-2 col-md-1" type="button" title='Send Reminder' onClick={handleFilterData} style={{width:"fit-content"}}><Notification/></button>
       </div>
      <div className="d-grpropValue gap-2 d-md-flex justify-content-md-end">
-<<<<<<< HEAD
-        <button className="btn btn-primary me-md-2" type="button" onClick={handleFilterData}>Reminder</button>
-        <Link to ={`/DetailsOfForm/${propValue}/Tracking/Responces`}><button className="btn btn-primary me-md-2" type="button">Responses</button></Link>
-=======
->>>>>>> 23d13935d8c7977e4f9b4b7a04323cf1c86b9297
       </div>
       {dataGroup.map((value, index) => {
         console.log(value)

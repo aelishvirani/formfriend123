@@ -52,7 +52,6 @@ const [data,setData] = useState([]);
       <div className="card-body">
         <h5 className="card-title">Special title treatment</h5>
         <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" className="btn btn-primary">Go somewhere</a>
       </div>
     </div>
   </div>
@@ -61,7 +60,6 @@ const [data,setData] = useState([]);
       <div className="card-body">
         <h5 className="card-title">Special title treatment</h5>
         <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" className="btn btn-primary">Go somewhere</a>
       </div>
     </div>
   </div>
@@ -70,7 +68,6 @@ const [data,setData] = useState([]);
       <div className="card-body">
         <h5 className="card-title">Special title treatment</h5>
         <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" className="btn btn-primary">Go somewhere</a>
       </div>
     </div>
   </div>
@@ -93,6 +90,7 @@ const [data,setData] = useState([]);
     <Link to={`/DetailsOfForm/${propValue}`}>
       <div className="card-body">
         <h5 className="card-title">{value.formName}</h5>
+        <h6>{}</h6>
         {/* <p className="card-text">With supporting text below as a natural lead-in to additional content.</p> */}
         {/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
       </div>

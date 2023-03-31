@@ -100,13 +100,13 @@ const GroupView = () => {
       console.log(err);
     }
   }
-
+  const shorten = (group.date) ? (group.date).substring(0, 10) : '';
   return (
     <>
       {" "}
-      <div>GroupView {propValue}</div>
+      {/* <div>GroupView {propValue}</div> */}
       <h1>{group.groupName}</h1>
-      <h3>{group.date}</h3>
+      <h3>{shorten}</h3>
       <p>{group.description}</p>
       <div className="d-grid gap-2 d-md-flex justify-content-md-end">
         <button

@@ -12,14 +12,22 @@ import Tracking from "./components/Tracking";
 import GroupView from "./components/GroupView";
 import React from "react";
 import Responces from "./components/Responces";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Template from "./components/template";
+import UserForm from "./components/UserForm";
+import Reminder from "./components/Reminder";
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/registration' element={<Register/>}/>
         <Route path="/" element={<AppLayout />}>
-          <Route index element={<Dashboard />} />
+          <Route index  element={<Dashboard />} />
           <Route path="group" element={<Group />} />
-          <Route path="reminders" element={<Blank />} />
+          <Route path="reminders" element={<Reminder/>} />
           <Route path="setting" element={<Blank />} />
           <Route path="user" element={<Blank />} />
           <Route path="form" element={<Forms />} />
@@ -31,6 +39,9 @@ function App() {
             path="DetailsOfForm/:propValue/Tracking"
             element={<Tracking />}
           />
+          <Route path='login' element={<Login/>}/>
+          <Route path='addTemplate/:propValue' element={<Template/>}/>
+          <Route path='UserForm/:propValue' element={<UserForm/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

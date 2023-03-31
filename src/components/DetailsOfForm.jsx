@@ -128,9 +128,9 @@ const DetailsOfForm=()=> {
 
   return (
     <>
+    <p>Form Link : {`http://localhost:3001/UserForm/${form.urlId}`}</p>
     <div className="d-grid gap-2 d-md-flex justify-content-md-end">
     <Link to={`/DetailsOfForm/${propValue}/Tracking`}> <button className="btn btn-primary me-md-2" type="button">Tracking</button></Link>
-      <button className="btn btn-primary" type="button">Button</button>
     </div>
       <div className="container mt-5">
         {/* <Link to={`/DetailsOfForm/${id}/Tracking`}><div className="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -140,16 +140,19 @@ const DetailsOfForm=()=> {
         </div>
         </Link> */}
         <Form>
+        <label>Form Name : </label>
         <Form.Control
           type="text"
           value={formName}
           onChange={(e) => handleFormNameChange(e)}
         /><br/>
+        <label>Title : </label>
         <Form.Control
           type="text"
           value={title}
           onChange={(e) => handleTitleChange(e)}
         /><br/>
+        <label>Description : </label>
           <Form.Control
             type="textarea"
             value={description}
@@ -157,18 +160,20 @@ const DetailsOfForm=()=> {
           /><br/>
           {fields.map((field, index) => (
             <>
-              <div style={{ border: "10px solid black" }}>
+              <div style={{ border: "2px solid black",padding:'4px',paddingLeft:'12px',borderRadius:"6px" }}>
                 <div className="form-group" key={index}>
+                <label>Field Name : </label>
                   <Form.Control
                     type="text"
                     value={field.question}
                     onChange={(e) => handleFieldNameChange(e, index)}
                   />
                   <br/>
+                  <label>Field Type : </label>
                   <Form.Control
                     as="select"
                     value={field.type.toLowerCase()}
-                    onChange={(e) => handleFieldTypeChange(e, index)}
+                    onChange={(e) => handleFieldTypeChange(e.target.value, index)}
                   >
                     <option value="text">Text</option>
                     <option value="textarea">Textarea</option>
@@ -228,8 +233,8 @@ const DetailsOfForm=()=> {
         <Button variant="primary" className="mt-3" onClick={handleAddField}>
           Add Field
         </Button>
-        <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-          <button className="btn btn-primary me-md-2" type="button" onClick={handlSubmission}>
+        <div className="d-grid gap-2 d-md-flex justify-content-md-center">
+          <button className="btn btn-primary" type="button" onClick={handlSubmission}>
             Submit
           </button>
         </div>

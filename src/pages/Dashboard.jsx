@@ -1,9 +1,12 @@
 import React,{useState , useEffect} from 'react'
+import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import Form from '../components/form/Form'
+import './Dashboard.css';
 function Dashboard() {
 
 const [data,setData] = useState([]);
+const [templateData,setTemplateData] = useState([])
     const getData = async () => {
         try {
             const res = await fetch('http://formfriend.cleverapps.io/api/form/AllForms',
@@ -17,16 +20,39 @@ const [data,setData] = useState([]);
       }
             );
             const actualdata = await res.json();
-            console.log(data);
             setData(actualdata);
+            console.log(data);
         }
         catch (err) {
-            console.log("err");
+            console.log(err);
         }
     }
 
+    const getTemplateData = async () => {
+      try {
+          const res = await fetch('http://formfriend.cleverapps.io/api/form/GetTemplate',
+            {
+      mode: "cors",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ"
+      },
+    }
+          );
+          const tempData = await res.json();
+          // setData(actualdata);
+          console.log(tempData);
+          setTemplateData(tempData);
+      }
+      catch (err) {
+          console.log(err);
+      }
+  }
+
     useEffect(() => {
         getData();
+        getTemplateData();
     },[])
 
 
@@ -37,41 +63,41 @@ const [data,setData] = useState([]);
 
 <div className="row">
   <div className="col-md-3 mt-3 mb-3 mb-sm-0">
+        <Link to='/form'>
     <div className="card">
       <div className="card-body">
-        <p className="card-text" style={{textAlign:'center'}}><Link to='/form'><svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
+        <p className="card-text" style={{textAlign:'center'}}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" className="bi bi-plus-lg" viewBox="0 0 16 16">
   <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-</svg></Link></p>
+</svg>
+</p>
         <h5 className="card-title" style={{textAlign:'center'}}>Add New form</h5>
         
       </div>
     </div>
+</Link>
   </div>
+{templateData.map((temp,index)=>{
+  const propValue= temp.templateId;
+  {/* console.log(temp); */}
+  {/* console.log(propValue); */}
+  return(
+    <>
   <div className="col-md-3 mt-3">
-    <div className="card">
+  <Link to={`/addTemplate/${propValue}`}>
+    <div className="card" style={{height:"100%"}}>
       <div className="card-body">
-        <h5 className="card-title">Special title treatment</h5>
-        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <h5 className="card-title">{temp.formName}</h5>
+        <p className="card-text" style={{fontWeight:'lighter'}}>{temp.description}</p>
       </div>
+        
     </div>
-  </div>
-  <div className="col-md-3 mt-3">
-    <div className="card">
-      <div className="card-body">
-        <h5 className="card-title">Special title treatment</h5>
-        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      </div>
-    </div>
-  </div>
-  <div className="col-md-3 mt-3">
-    <div className="card">
-      <div className="card-body">
-        <h5 className="card-title">Special title treatment</h5>
-        <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
-      </div>
-    </div>
-  </div>
-  
+    </Link>
+  </div></>)
+
+})}
+
+
 </div>
 <hr style={{width:'100%',textAlign:'left',marginLeft:'0'}}/>
 <br/>
@@ -87,12 +113,15 @@ const [data,setData] = useState([]);
     <>
     <div className="col-md-4 mt-3 mb-3 mb-sm-0" key={value.id}>
     <div className="card">
+    
     <Link to={`/DetailsOfForm/${propValue}`}>
       <div className="card-body">
-        <h5 className="card-title">{value.formName}</h5>
-        <h6>{}</h6>
-        {/* <p className="card-text">With supporting text below as a natural lead-in to additional content.</p> */}
-        {/* <a href="#" className="btn btn-primary">Go somewhere</a> */}
+        <p className="card-title" style={{fontSize:'22px',fontWeight:'bold'}}>{value.formName}</p>
+        <div style={{margin:'0px',paddingTop:'8px'}}>
+        <p style={{fontSize:'18px',margin:'0px',paddingTop:'0px',}}>Create on : {value.lastEdited.substring(0,10)}</p>
+        <p style={{fontSize:'18px',margin:'0px',paddingTop:'5px',}}>Last Edited :{value.createdOn.substring(0,10)}</p>
+       
+        </div>
       </div>
   </Link>
     </div>

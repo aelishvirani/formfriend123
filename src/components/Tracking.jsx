@@ -15,6 +15,7 @@ const Tracking = (props) => {
   const[toAdd,setToAdd] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
+  const [showReminderModal, setShowReminderModal] = useState(false);
   const [selectedValue, setSelectedValue] = useState([]);
 
   const getData = async () => {
@@ -60,6 +61,7 @@ const Tracking = (props) => {
 
   
   const handleFilterData = async () => {
+    var CreatorMessage = document.getElementById("inputMessage").value;
     const filtered = {};
     dataGroup.forEach(async (group, groupIndex) => {
       filtered[groupIndex] = [];
@@ -68,12 +70,13 @@ const Tracking = (props) => {
           filtered[groupIndex].push(participant.email);
         }
       });
-      
       const reminder={
         "GroupId":`${group.groupId}`,
-        "Message":"Test",
+        "Message":`${CreatorMessage}`,
         "Participants":filtered[groupIndex],
+        "formId": `${propValue}`
       }
+      
       console.log(group.groupId);
       console.log(reminder);
     try {
@@ -95,7 +98,7 @@ const Tracking = (props) => {
     setFilteredData(filtered);
     console.log(filtered);
     console.log(filteredData);
-  
+    setShowReminderModal(false)
   };
   
   const handleSumbitGroup = async () => {
@@ -133,6 +136,10 @@ const Tracking = (props) => {
     setShowModal(true);
   }
 
+  const addMessage= async()=>{
+    setShowReminderModal(true)
+  }
+
   const handleDelete = (id) => async () => {
     console.log(id);
     try {
@@ -163,7 +170,7 @@ const Tracking = (props) => {
     <div className='col-md-2'></div>
       <button className="btn btn-primary me-md-2 col-md-1" title='Add Group' type="button" onClick={addGroup} style={{width:"fit-content"}}><MyImage/></button>
       <div className='col-md-1'></div>
-      <button className="btn btn-primary me-md-2 col-md-1" type="button" title='Send Reminder' onClick={handleFilterData} style={{width:"fit-content"}}><Notification/></button>
+      <button className="btn btn-primary me-md-2 col-md-1" type="button" title='Send Reminder' onClick={addMessage} style={{width:"fit-content"}}><Notification/></button>
       </div>
      <div className="d-grpropValue gap-2 d-md-flex justify-content-md-end">
       </div>
@@ -243,6 +250,41 @@ const Tracking = (props) => {
     </Form>
   </Modal.Body>
 </Modal>
+
+<Modal show={showReminderModal} onHide={() => setShowReminderModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Type message here</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form
+            onSubmit={(event) => {
+              event.preventDefault();
+              setShowModal(false);
+            }}
+          >
+            <Form.Group>
+              <div className="row mb-3">
+                <label
+                  for="inputDescription"
+                  className="col-sm-5 col-form-label"
+                >
+                  Message :
+                </label>
+                <div className="col-sm-10">
+                  <textarea
+                    type="text"
+                    className="form-control"
+                    id="inputMessage"
+                  ></textarea>
+                </div>
+              </div>
+            </Form.Group>
+            <Button variant="primary" type="submit" onClick={handleFilterData}>
+              Send
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
 
     </>
   );

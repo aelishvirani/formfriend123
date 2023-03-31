@@ -72,10 +72,12 @@ function Group() {
       <td>{total}</td>
       <td>{group.groupLink}</td>
       <td>{group.date}</td>
-     <Link to={`/${propValue}/GroupView`}>
       {/* <td>{group.groupId}</td> */}
-       <td style={{color:"blue"}}>View</td> 
+       <td style={{color:"blue"}}>
+     <Link to={`/${propValue}/GroupView`}>
+       View
       </Link>
+       </td> 
       {/* <Link><td>view</td></Link> */}
     </tr></>)
 

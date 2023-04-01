@@ -1,8 +1,14 @@
 import React,{useState,useEffect} from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams ,useNavigate} from 'react-router-dom';
+import Cookies from 'js-cookie';
 const Responces=(props)=>{
     const { propValue } = useParams();
-
+    var navigate = useNavigate();
+    const token = Cookies.get("token");
+    if(token===undefined)
+    {
+      navigate("/");
+    }
     
 //   const [dataGroup,setGroupData] = useState([]);
 //   const [total,setTotal] = useState(0);
@@ -15,7 +21,7 @@ const Responces=(props)=>{
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ"
+        Authorization: "Bearer " + token 
       },
     }
           );

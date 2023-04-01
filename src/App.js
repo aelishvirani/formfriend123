@@ -22,10 +22,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route path='/login' element={<Login/>}/>
+          <Route index  element={<Login/>}/>
           <Route path='/registration' element={<Register/>}/>
         <Route path="/" element={<AppLayout />}>
-          <Route index  element={<Dashboard />} />
+          <Route path='/dashboard'  element={<Dashboard />} />
           <Route path="group" element={<Group />} />
           <Route path="reminders" element={<Reminder/>} />
           <Route path="setting" element={<Blank />} />

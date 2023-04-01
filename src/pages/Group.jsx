@@ -1,12 +1,19 @@
 import React,{useEffect,useState} from 'react'
 import {Button} from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import AddGroup from '../components/AddGroup'
+import Cookies from 'js-cookie'
 function Group() {
 
 
   const [dataGroup,setGroupData] = useState([]);
   const [total,setTotal] = useState(0);
+  var navigate = useNavigate();
+  const token = Cookies.get("token");
+  if(token===undefined)
+  {
+    navigate("/");
+  }
   const getData = async () => {
       try {
           const res = await fetch('http://formfriend.cleverapps.io/api/group/GetGroups',
@@ -15,7 +22,7 @@ function Group() {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
-        Authorization: "Bearer " + "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ"
+        Authorization: "Bearer " + token 
       },
     }
           );

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-
+import { useParams,useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 const UserForm=(props)=> {
     const {propValue} = useParams();
     const [fields, setFields] = useState([]);
@@ -12,6 +12,13 @@ const UserForm=(props)=> {
     const[description,setDescription] = useState("");
     const [form,setForms]  = useState([]);
     const[data,setData] = useState({});
+
+    var navigate = useNavigate();
+  const token = Cookies.get("token");
+  if(token===undefined)
+  {
+    navigate("/");
+  }
     const getForm = async () => {
         try {
             const res = await fetch(`http://formfriend.cleverapps.io/api/form/ViewForm/${propValue}`,
@@ -20,7 +27,7 @@ const UserForm=(props)=> {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
-          Authorization: "Bearer " + "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiZTI5ZGVmNGUtMjdmNy00YjZjLTlhNjQtMzMzMDI3ZjE0MzJiIiwibmJmIjoxNjgwMjUzNjA1LCJleHAiOjE2ODI2NzI4MDUsImlhdCI6MTY4MDI1MzYwNX0.DgF18Dzd1K5uFwqUnv-kFyMX6u0zalZdZNC7pYPC88jpTwSdkLg4RrjwccLGt5sZvHjn2Isgy7809Hf1MUIQ4Q"
+          Authorization: "Bearer " + token 
         },
       }
             );

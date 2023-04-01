@@ -7,7 +7,7 @@ const sidebarNavItems = [
     {
         display: 'Dashboard',
         icon: <i className='bx bx-home'></i>,
-        to: '/',
+        to: '/dashboard',
         section: ''
     },
     {

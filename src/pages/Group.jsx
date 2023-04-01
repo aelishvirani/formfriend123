@@ -10,10 +10,14 @@ function Group() {
   const [total,setTotal] = useState(0);
   var navigate = useNavigate();
   const token = Cookies.get("token");
-  if(token===undefined)
-  {
-    navigate("/");
-  }
+  
+  const check = () =>{
+    if(token==undefined)
+    {
+      window.location.href = "/";
+      navigate("/");
+    }
+    }
   const getData = async () => {
       try {
           const res = await fetch('http://formfriend.cleverapps.io/api/group/GetGroups',
@@ -39,6 +43,7 @@ function Group() {
   }
 
   useEffect(() => {
+    check();
       getData();
   },[])
 

@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 function AddGroup() {
   // const navigate = useNavigate();
   var navigate = useNavigate();
   const token = Cookies.get("token");
-  if(token===undefined)
-  {
-    navigate("/");
-  }
+  
+  const check = () =>{
+    if(token==undefined)
+    {
+      window.location.href = "/";
+      navigate("/");
+    }
+    }
+    useEffect(()=>{
+      check()
+    },[])
  const createGroup = async () => {
   console.log("sdfk");
     const groupName = document.getElementById('inputGroupname').value;

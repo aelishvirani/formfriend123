@@ -5,10 +5,14 @@ const Responces=(props)=>{
     const { propValue } = useParams();
     var navigate = useNavigate();
     const token = Cookies.get("token");
-    if(token===undefined)
-    {
-      navigate("/");
-    }
+  
+    const check = () =>{
+      if(token==undefined)
+      {
+        window.location.href = "/";
+        navigate("/");
+      }
+      }
     
 //   const [dataGroup,setGroupData] = useState([]);
 //   const [total,setTotal] = useState(0);
@@ -25,6 +29,7 @@ const Responces=(props)=>{
       },
     }
           );
+  
           const actualdata = await res.json();
           console.log(actualdata)
           console.log(actualdata.Responses);
@@ -38,6 +43,7 @@ const Responces=(props)=>{
   }
 
   useEffect(() => {
+    check();
       getData();
   },[])
   return (

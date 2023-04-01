@@ -1,8 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 const Reminder = () => {
   const [reminds, setReminds] = useState([]);
   const navigate = useNavigate();
+  const token = Cookies.get("token");
+  
+  const check = () =>{
+    if(token==undefined)
+    {
+      window.location.href = "/";
+      navigate("/");
+    }
+    }
 //   const [forseen,setForseen] = useState()
   const getData = async () => {
     try {
@@ -15,7 +25,7 @@ const Reminder = () => {
             "Content-Type": "application/json",
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiMDhkOWE0MjktNGQzMS00ODM1LWE3MDEtNDc2YWQ3NjMwZWYzIiwibmJmIjoxNjgwMjYyMjExLCJleHAiOjE2ODI2ODE0MTEsImlhdCI6MTY4MDI2MjIxMX0.UeF2GhpUQ10wiMALtZ7OU7txEJ7FK1L5Li0RQASwRsZifYfF8dwKkp0NTPiIPG3x0254Ab12RReMrgu9woV7Ig",
+              token
           },
         }
       );
@@ -52,6 +62,7 @@ const Reminder = () => {
     // }
   };
   useEffect(() => {
+    check();
     getData();
   }, []);
 

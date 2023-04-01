@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import { Modal, Button, Form, Toast } from 'react-bootstrap';
 import { ReactComponent as MyImage } from '../svgs/group_add_FILL0_wght400_GRAD0_opsz48.svg';
 import { ReactComponent as Notification } from '../svgs/add_alert_FILL0_wght400_GRAD0_opsz48.svg';
 import { ReactComponent as Delete } from '../svgs/delete_FILL0_wght400_GRAD0_opsz48.svg';
-
+import Cookies from 'js-cookie';
 
 const Tracking = (props) => {
   const [dataGroup, setDataGroup] = useState([]);
   const [filteredData, setFilteredData] = useState({});
   const { propValue } = useParams();
-
+var navigate= useNavigate();
   const[groups,setGroups]= useState([]);
   const[toAdd,setToAdd] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
   const [showReminderModal, setShowReminderModal] = useState(false);
   const [selectedValue, setSelectedValue] = useState([]);
+
+  const token = Cookies.get("token");
+  
+  const check = () =>{
+    if(token==undefined)
+    {
+      window.location.href = "/";
+      navigate("/");
+    }
+    }
 
   const getData = async () => {
     try {
@@ -25,7 +35,7 @@ const Tracking = (props) => {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ',
+          Authorization: 'Bearer ' + token
         },
       });
       const actualdata = await res.json();
@@ -85,7 +95,7 @@ const Tracking = (props) => {
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ',
+          Authorization: 'Bearer ' + token
         },
         body: JSON.stringify(reminder),
       });
@@ -128,6 +138,7 @@ const Tracking = (props) => {
 
   
   useEffect(() => {
+    check();
     getData();
   }, []);
 

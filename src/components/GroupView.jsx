@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { Modal, Button, Form, Toast } from "react-bootstrap";
+import Cookies from "js-cookie";
 const GroupView = () => {
   const { propValue } = useParams();
   const [group, setGroup] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const[toAdd,setToAdd] = useState([]);
+var navigate=useNavigate();
+  const token = Cookies.get("token");
+  
+  const check = () =>{
+    if(token==undefined)
+    {
+      window.location.href = "/";
+      navigate("/");
+    }
+    }
   const getData = async () => {
     try {
       const res = await fetch(
@@ -18,7 +29,7 @@ const GroupView = () => {
             "Content-Type": "application/json",
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ",
+              token
           },
         }
       );
@@ -33,6 +44,7 @@ const GroupView = () => {
   };
 
   useEffect(() => {
+    check();
     getData();
   }, []);
   const addMember = async () => {
@@ -53,8 +65,7 @@ const GroupView = () => {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
             Authorization:
-              "Bearer " +
-              "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ",
+              "Bearer " + token
           },
           body: JSON.stringify(groupParticipants),
         }

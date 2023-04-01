@@ -15,10 +15,15 @@ const UserForm=(props)=> {
 
     var navigate = useNavigate();
   const token = Cookies.get("token");
-  if(token===undefined)
-  {
-    navigate("/");
-  }
+  
+  
+  const check = () =>{
+    if(token==undefined)
+    {
+      window.location.href = "/";
+      navigate("/");
+    }
+    }
     const getForm = async () => {
         try {
             const res = await fetch(`http://formfriend.cleverapps.io/api/form/ViewForm/${propValue}`,
@@ -43,6 +48,7 @@ const UserForm=(props)=> {
     }
 
     useEffect(() => {
+      check();
         getForm();
     },[])
   return (

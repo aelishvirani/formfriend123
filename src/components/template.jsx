@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import {Link, useParams,useNavigate } from "react-router-dom";
-
+import Cookies from "js-cookie";
  const Template = (props) => {
 
   const {propValue} = useParams();
   const navigate = useNavigate();
+  const token = Cookies.get("token");
+  
+  const check = () =>{
+    if(token==undefined)
+    {
+      window.location.href = "/";
+      navigate("/");
+    }
+    }
   const getData = async () => {
     try {
       const res = await fetch(
@@ -17,7 +26,7 @@ import {Link, useParams,useNavigate } from "react-router-dom";
             "Content-Type": "application/json",
             Authorization:
               "Bearer " +
-              "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYUBnbWFpbC5jb20iLCJlbWFpbCI6ImFAZ21haWwuY29tIiwianRpIjoiNTI4NDdjNmMtMTc0Yi00ZjAzLTljOGEtYmJhZjlkYjBkNWUyIiwibmJmIjoxNjc5ODU2MzYzLCJleHAiOjE2ODIyNzU1NjMsImlhdCI6MTY3OTg1NjM2M30.lT1YLqsgk6vKUm_oO5wigvonyzAEutJphVTNyuR1Zu1bQ4hkIrSk4QgIwHGJcLVjCG42Ba0ykrGD8nvLVp4BtQ",
+              token
           },
         }
       );
@@ -33,6 +42,7 @@ import {Link, useParams,useNavigate } from "react-router-dom";
   };
 
   useEffect(() => {
+    check();
     getData();
 },[])
 

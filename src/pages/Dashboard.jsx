@@ -7,9 +7,13 @@ import Cookies from "js-cookie";
 function Dashboard() {
   var navigate = useNavigate();
   const token = Cookies.get("token");
-  if(token===undefined)
+
+  const check = () =>{
+  if(token==undefined)
   {
+    window.location.href = "/";
     navigate("/");
+  }
   }
   console.log(token);
 const [data,setData] = useState([]);
@@ -58,6 +62,7 @@ const [templateData,setTemplateData] = useState([])
   }
 
     useEffect(() => {
+      check();
         getData();
         getTemplateData();
     },[])

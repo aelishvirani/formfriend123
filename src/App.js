@@ -17,11 +17,12 @@ import Register from "./pages/Register";
 import Template from "./components/template";
 import UserForm from "./components/UserForm";
 import Reminder from "./components/Reminder";
-
+import Cookies from 'js-cookie';
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+          <Route index path="/login"  element={<Login/>}/>
           <Route index  element={<Login/>}/>
           <Route path='/registration' element={<Register/>}/>
         <Route path="/" element={<AppLayout />}>
@@ -39,7 +40,7 @@ function App() {
             path="DetailsOfForm/:propValue/Tracking"
             element={<Tracking />}
           />
-          <Route path='login' element={<Login/>}/>
+      
           <Route path='addTemplate/:propValue' element={<Template/>}/>
           <Route path='UserForm/:propValue' element={<UserForm/>}/>
         </Route>
